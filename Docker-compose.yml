@@ -1,67 +1,66 @@
 services:
   usuarios-mysql:
     image: mysql:latest
-    container_name: usuarios-mysql
+    container_name: user-mysql
     environment:
       MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: usuarios
+      MYSQL_DATABASE: user
     ports:
       - 3306:3306
 
-  usuariosAPI:
-    image: usuarios-api-image
-    container_name: usuarios-api-container
+  user-API:
+    image: api-user-image
+    container_name: api-user-container
     ports:
       - 8080:8080
     depends_on:
-      - usuarios-mysql
+      - user-mysql
 
-  produtos-mongo:
+  mongo-products:
     image: mongo:latest
-    container_name: produtos-mongo
+    container_name: mongo-products
 
-  produtosAPI:
-    image: produtos-api-image
-    container_name: produtos-api-container
+  product-API:
+    image: api-products-image
+    container_name: api-products-container
     ports:
       - 8081:8081
     depends_on:
-      - produtos-mongo
+      - mongo-products
 
-  carrinhos-mongo:
+  mongo-carts:
     image: mongo:latest
-    container_name: carrinhos-mongo
+    container_name: mongo-carts
     command: mongod -port 27018
     ports:
       - 27018:27018
 
-  carrinhosAPI:
-    image: carrinhos-api-image
-    container_name: carrinhos-api-container
+  cart-API:
+    image: api-cart-image
+    container_name: api-cart-container
     ports:
       - 8082:8082
     depends_on:
-      - carrinhos-mongo
+      - mongo-carts
+
+mongo-sales:
+  image: mongo:latest
+  container_name: mongo-sales
+  hostname: mongo-sales
+  ports:
+    - 27019:27019
 
 
- vendas-mongo:
-   image: mongo:latest
-   container_name: vendas-mongo
-   hostname: vendas-mono
-   ports:
-     - 27019:27019
-
-
- vendasAPI:
-   image: vendas-api-image
-   container_name: vendas-api-container
-   ports:
-     - 80:80
-   depends_on:
-     - usuariosAPI
-     - produtosAPI
-     - carrinhosAPI
-     - vendas-mongo
+  salesAPI:
+    image: api-sales-image
+    container_name: api-sales-container
+    ports:
+      - 80:80
+    depends_on:
+      - user-API
+      - product-API
+      - cart-API
+      - mongo-sales
 
 
 
