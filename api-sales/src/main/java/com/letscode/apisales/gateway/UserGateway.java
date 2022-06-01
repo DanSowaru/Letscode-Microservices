@@ -7,12 +7,12 @@ import org.springframework.web.reactive.function.client.WebClientResponseExcepti
 import reactor.core.publisher.Mono;
 
 @Component
-public class UsuarioGateway {
+public class UserGateway {
 
-    public Mono<String> getUsuario(Integer usuarioId) {
+    public Mono<String> getUser(Integer userId) {
         return WebClient
                 .builder()
-                .baseUrl(String.format("htttp://userAPI:8080/v1/user/%s", usuarioId))
+                .baseUrl(String.format("htttp://cartAPI:8080/v1/user/%s", userId))
                 .build()
                 .get()
                 .retrieve()

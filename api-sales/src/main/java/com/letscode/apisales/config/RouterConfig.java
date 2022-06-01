@@ -1,7 +1,7 @@
 package com.letscode.apisales.config;
 
 
-import com.letscode.apisales.handler.VendaHandler;
+import com.letscode.apisales.handler.SaleHandler;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.reactive.function.server.RouterFunction;
@@ -12,7 +12,7 @@ import org.springframework.web.reactive.function.server.ServerResponse;
 public class RouterConfig {
 
     @Bean
-    public RouterFunction<ServerResponse> route(VendaHandler vendaHandler) {
-        return RouterFunctions.route().POST("/venda", vendaHandler::criaVenda).build();
+    public RouterFunction<ServerResponse> route(SaleHandler saleHandler) {
+        return RouterFunctions.route().POST("/venda", saleHandler::createSale).build();
     }
 }
