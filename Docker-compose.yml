@@ -1,0 +1,72 @@
+services:
+  usuarios-mysql:
+    image: mysql:latest
+    container_name: usuarios-mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: usuarios
+    ports:
+      - 3306:3306
+
+  usuariosAPI:
+    image: usuarios-api-image
+    container_name: usuarios-api-container
+    ports:
+      - 8080:8080
+    depends_on:
+      - usuarios-mysql
+
+  produtos-mongo:
+    image: mongo:latest
+    container_name: produtos-mongo
+
+  produtosAPI:
+    image: produtos-api-image
+    container_name: produtos-api-container
+    ports:
+      - 8081:8081
+    depends_on:
+      - produtos-mongo
+
+  carrinhos-mongo:
+    image: mongo:latest
+    container_name: carrinhos-mongo
+    command: mongod -port 27018
+    ports:
+      - 27018:27018
+
+  carrinhosAPI:
+    image: carrinhos-api-image
+    container_name: carrinhos-api-container
+    ports:
+      - 8082:8082
+    depends_on:
+      - carrinhos-mongo
+
+
+ vendas-mongo:
+   image: mongo:latest
+   container_name: vendas-mongo
+   hostname: vendas-mono
+   ports:
+     - 27019:27019
+
+
+ vendasAPI:
+   image: vendas-api-image
+   container_name: vendas-api-container
+   ports:
+     - 80:80
+   depends_on:
+     - usuariosAPI
+     - produtosAPI
+     - carrinhosAPI
+     - vendas-mongo
+
+
+
+
+
+
+
+
